@@ -6,13 +6,29 @@ class Greeting extends React.Component {
         super(props);
 
         this.state = {
-
+            isGreeting: true
         }
     }
 
+    clickHandler() {
+        this.setState({
+            isGreeting: !this.state.isGreeting
+        })
+    }
+
     render() {
-        return <h1>Hello {this.props.name}</h1>
+        const {isGreeting} = this.state;
+        const greetingText = isGreeting ? 'Hello' : 'Bye'; // isGreeting === true
+        return <h1 onClick={() => {this.clickHandler()}}>{greetingText} {this.props.name}</h1>
     }
 }
 
 export default Greeting;
+
+/*
+
+Доробити компоненту таким чином, що за натиснення на елемент текст "Hello" змінювався на "Bye"
+Підказка. Тут треба працювати за стейтом
+
+
+*/
