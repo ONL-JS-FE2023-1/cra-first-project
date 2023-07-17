@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Greeting extends React.Component {
+class Aloha extends React.Component {
     // Якщо вам потрібен стейт - ви зобов'язані створити конструктор, в якому створюєте стейт
     constructor(props) {
         super(props);
@@ -17,18 +17,10 @@ class Greeting extends React.Component {
     }
 
     render() {
-        const {isGreeting} = this.state;
+        const { isGreeting } = this.state;
         const greetingText = isGreeting ? 'Hello' : 'Bye'; // isGreeting === true
-        return <h1 onClick={() => {this.clickHandler()}}>{greetingText} {this.props.name}</h1>
+        return <h1 onClick={() => { this.clickHandler() }}>{greetingText} {this.props.name} {this.props.lastName}</h1>
     }
 }
 
-export default Greeting;
-
-/*
-
-Доробити компоненту таким чином, що за натиснення на елемент текст "Hello" змінювався на "Bye"
-Підказка. Тут треба працювати за стейтом
-
-
-*/
+export default Aloha;
