@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Scene from './components/Scene/Scene';
+import TodoList from './components/TodoList/TodoList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Scene />
+  <TodoList />
 );
