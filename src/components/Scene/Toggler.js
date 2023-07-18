@@ -1,26 +1,12 @@
-import React from "react";
-
-class Toggler extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isOn: true
-        }
+function Toggler(props) {
+    const clickHandler = () => {
+        props.changeParentState();
     }
 
-    clickHandler() {
-        this.setState({
-            isOn: !this.state.isOn
-        });
-        this.props.changeParentState();
-    }
 
-    render() {
-        return (
-            <button onClick={() => {this.clickHandler()}}>{this.state.isOn ? 'Off' : 'On'}</button>
-        )
-    }
+    return (
+        <button onClick={() => { clickHandler() }}>{props.buttonText}</button>
+    )
 }
 
 export default Toggler;
