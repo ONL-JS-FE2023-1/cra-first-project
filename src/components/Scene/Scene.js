@@ -3,10 +3,25 @@ import Toggler from './Toggler.js';
 import './style.css';
 
 class Scene extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLight: true
+        }
+    }
+
+    toggleScene() {
+        this.setState({
+            isLight: !this.state.isLight
+        })
+    }
+
     render() {
+        const {isLight} = this.state;
         return (
-            <div className="scene-on">
-                <Toggler />
+            <div className={isLight === true ? 'scene-on' : 'scene-off'}>
+                <Toggler changeParentState={() => {this.toggleScene()}} />
             </div>
         )
     }
@@ -16,10 +31,7 @@ export default Scene;
 
 /*
 
-Зробіть так, щоб при кліці на button в компоненті Toggler текст кнопки змінювався
+Parent -> Child - props
+Child -> Parent - callback
 
-Якщо текст кнопки в момент натиснення був On -> Off
-Якщо текст кнопки в момент натиснення був Off -> On
-
-Підказка. Працюйте із стейтом
 */
