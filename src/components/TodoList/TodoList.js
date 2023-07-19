@@ -1,4 +1,5 @@
 import React from "react";
+import TodoItem from "./TodoItem";
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class TodoList extends React.Component {
     }
 
     removeTask(taskIDtoRemove) {
-        const {todoList} = this.state;
+        const { todoList } = this.state;
         const filteredArray = todoList.filter((task) => task.id !== taskIDtoRemove);
         this.setState({
             todoList: filteredArray
@@ -32,10 +33,9 @@ class TodoList extends React.Component {
 
     renderLi() {
         const { todoList } = this.state;
-        return todoList.map((task) => <li key={task.id}>
-            {task.text}
-            <button onClick={() => {this.removeTask(task.id)}}>X</button>
-            </li>)
+        return todoList.map((task) => 
+        <TodoItem key={task.id} text={task.text} id={task.id} delCallback={(id) => this.removeTask(id)} />
+        )
     }
 
     render() {
@@ -52,11 +52,3 @@ class TodoList extends React.Component {
 }
 
 export default TodoList;
-
-/*
-
-
-В кожній li зробити кнопку, за натисненням на яку цей елемент списку має зникунти
-(тобто оновити стейт таким чином, щоб зник об'єкт в масиві, на кнопку видалення якого ми натиснули)
-
-*/

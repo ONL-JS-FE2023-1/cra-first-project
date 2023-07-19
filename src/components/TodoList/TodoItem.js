@@ -12,3 +12,19 @@ function компонента для Айтема (лі з текстом + кн
 5. В компоненті TodoItem зробити виклик callback і передати цьому callback'у айдішник (за кліком на кнопку)
 
 */
+
+function TodoItem(props) {
+    const clickHandler = () => {
+        const {delCallback, id} = props;
+        delCallback(id);
+    }
+
+    return (
+        <li>
+            {props.text}
+            <button onClick={() => clickHandler()}>X</button>
+        </li>
+    )
+}
+
+export default TodoItem;
