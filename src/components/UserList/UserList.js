@@ -13,21 +13,26 @@ class UserList extends React.Component {
 
     componentDidMount() {
         getUsers().then((data) => {
-            const {results} = data;
+            const { results } = data;
             this.setState({
                 users: results
             })
         });
     }
 
+    renderUsers = () => {
+        const { users } = this.state;
+        return users.map((user) => <UserCard user={user} key={user.login.uuid} />)
+    }
+
     render() {
-        const {users} = this.state;
-        
-        return(
+        const { users } = this.state;
+        return (
             <>
                 <h1>User List</h1>
-
-                {users.length > 0 ? <UserCard user={users[0]} /> : null}
+                <section className="card-container">
+                    {users.length > 0 ? this.renderUsers() : null}
+                </section>
             </>
         )
     }
