@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import CounterPage from './components/Counter/CounterPage';
+import UserList from './components/UserList/UserList';
+
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <CounterPage />
+  <UserList />
 );
