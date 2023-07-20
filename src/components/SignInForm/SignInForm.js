@@ -17,16 +17,10 @@ class SignInForm extends React.Component {
         console.log(this.state); // тут може бути запит на сервер
     }
 
-    changeEmailHandler = (event) => {
+    universalChangeHandler = ({target: {value, name}}) => {
         this.setState({
-            email: event.target.value
-        })
-    }
-
-    changePasswordHandler = (event) => {
-        this.setState({
-            password: event.target.value
-        })
+                    [name]: value
+                })
     }
     
     render() {
@@ -37,12 +31,12 @@ class SignInForm extends React.Component {
             <form className='form-wrapper' onSubmit={this.submitHandler}>
                 <label>
                     Your email: 
-                    <input type='email' name='email' onChange={this.changeEmailHandler} value={email} />
+                    <input type='email' name='email' onChange={this.universalChangeHandler} value={email} />
                 </label>
     
                 <label>
                     Your password:
-                    <input type='password' name='password' onChange={this.changePasswordHandler} value={password} />
+                    <input type='password' name='password' onChange={this.universalChangeHandler} value={password} />
                 </label>
     
                 <button type='submit'>Send form</button>
