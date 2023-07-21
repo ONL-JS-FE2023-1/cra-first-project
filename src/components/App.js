@@ -1,9 +1,10 @@
-import SignInForm from "./SignInForm/SignInForm";
+import HelloParent from "./HelloForm/HelloParent";
+
 
 function App() {
 
     return(
-        <SignInForm />
+        <HelloParent />
     )
 }
 
