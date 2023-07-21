@@ -1,5 +1,6 @@
 import React from "react";
 import TodoItem from "./TodoItem";
+import TodoForm from "./TodoForm";
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -38,10 +39,27 @@ class TodoList extends React.Component {
         )
     }
 
+    formHandler= (text) => {
+        const {todoList} = this.state;
+
+        const newObj = {
+            id: todoList.length + 1,
+            text
+        }
+
+        // Задача: додати до старого масиву новий об'єкт завдання
+        const newArr = [...todoList, newObj];
+        this.setState({
+            todoList: newArr
+        })
+    }
+
     render() {
         return (
             <>
                 <h1>TODO LIST</h1>
+
+                <TodoForm sendData={this.formHandler} />
 
                 <ul>
                     {this.renderLi()}

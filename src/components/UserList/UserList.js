@@ -81,7 +81,7 @@ class UserList extends React.Component {
 
                 <label>
                     Type count users
-                    <input type='text' min={1} max={100} onChange={this.setUserCount} />
+                    <input type='number' min={1} max={100} onChange={this.setUserCount} />
                 </label>
                 <button onClick={this.loadUsers}>Load users</button>
 
