@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import './style.css';
 import styles from './TodoFormStyle.module.css';
+import cx from 'classnames';
 
 class TodoForm extends Component {
     constructor(props) {
@@ -73,12 +74,12 @@ class TodoForm extends Component {
 */
 
 
-function cx(objectClassNames) {
-    const cort = Object.entries(objectClassNames);
-    const filteredArray = cort.filter(([className, condition]) => condition);
-    const MapArray = filteredArray.map(([className, condition]) => className);
-    return MapArray.join(' ');
-}
+// function cx(objectClassNames) {
+//     const cort = Object.entries(objectClassNames);
+//     const filteredArray = cort.filter(([className, condition]) => condition);
+//     const MapArray = filteredArray.map(([className, condition]) => className);
+//     return MapArray.join(' ');
+// }
 // 'className1 className2'
 
 /*
