@@ -1,0 +1,32 @@
+@mixin widthAndHeight($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+%flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+}
+
+.container {
+    @extend %flex-column;
+    @include widthAndHeight(200px, 200px);
+    background-color: blueviolet;
+    border: 4px dashed red;
+
+    &:hover {
+        background-color: aquamarine;
+    }
+}
+
+.invalid-input {
+    border:10px solid red;
+    background: yellow;
+}
+
+.input {
+    height: 2em;
+    background-color: aqua;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import './style.css';
-import styles from './TodoFormStyle.module.css';
+import styles from './TodoFormStyle.module.scss';
 import cx from 'classnames';
 
 class TodoForm extends Component {
