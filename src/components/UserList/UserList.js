@@ -1,6 +1,7 @@
 import React from "react";
 import { getUsers } from "../../api";
 import UserCard from "./UserCard";
+import HashLoader from "react-spinners/HashLoader";
 
 class UserList extends React.Component {
     constructor(props) {
@@ -9,17 +10,30 @@ class UserList extends React.Component {
         this.state = {
             users: [],
             filteredUsers: [],
-            userCount: 100
+            userCount: 100,
+            isLoading: true,
+            error: null
         }
     }
 
     componentDidMount() {
-        getUsers(this.state.userCount).then((data) => {
-            const { results } = data;
-            this.setState({
-                users: results
+        getUsers(this.state.userCount)
+            .then((data) => {
+                const { results } = data;
+                this.setState({
+                    users: results
+                })
             })
-        });
+            .catch((error) => {
+                this.setState({
+                    error
+                })
+            })
+            .finally(() => {
+                this.setState({
+                    isLoading: false
+                })
+            });
     }
 
     renderUsers = () => {
@@ -34,7 +48,7 @@ class UserList extends React.Component {
     handleSearch = ({ target: { value } }) => {
         // 1
         // якщо в інпутику нічого немає, то чистимо масив відфільтрованих юзерів
-        if(value === '') {
+        if (value === '') {
             this.setState({
                 filteredUsers: []
             })
@@ -56,7 +70,7 @@ class UserList extends React.Component {
         })
     }
 
-    setUserCount = ({target: {value}}) => {
+    setUserCount = ({ target: { value } }) => {
         this.setState({
             userCount: value
         })
@@ -74,7 +88,7 @@ class UserList extends React.Component {
 
 
     render() {
-        const { users } = this.state;
+        const { users, isLoading, error } = this.state;
         return (
             <>
                 <h1>User List</h1>
@@ -91,7 +105,13 @@ class UserList extends React.Component {
                 </label>
 
                 <section className="card-container">
-                    {users.length > 0 ? this.renderUsers() : <h2>Users is loading!</h2>}
+                    {isLoading && <HashLoader 
+                        size={500} 
+                        color="rgba(137, 30, 30, 1)" 
+                        cssOverride={{ margin: "0 auto" }} />
+                    }
+                    {error && <h2 style={{ backgroundColor: 'red', color: 'white' }}>{error.message}</h2>}
+                    {users.length > 0 ? this.renderUsers() : null}
                 </section>
             </>
         )
