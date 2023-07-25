@@ -1,9 +1,9 @@
-import TodoList from './TodoList/TodoList'
+import UserList from './UserList/UserList'
 
 
 function App() {
     return(
-        <TodoList />
+        <UserList />
     )
 }
 
