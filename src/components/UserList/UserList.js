@@ -12,28 +12,21 @@ class UserList extends React.Component {
             filteredUsers: [],
             userCount: 100,
             isLoading: true,
-            error: null
+            error: null,
+            page: 1
         }
     }
 
     componentDidMount() {
-        getUsers(this.state.userCount)
-            .then((data) => {
-                const { results } = data;
-                this.setState({
-                    users: results
-                })
-            })
-            .catch((error) => {
-                this.setState({
-                    error
-                })
-            })
-            .finally(() => {
-                this.setState({
-                    isLoading: false
-                })
-            });
+        const {userCount, page} = this.state;
+        this.loadUsers(userCount, page);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const {userCount, page} = this.state;
+        if(prevState.page !== page) {
+            this.loadUsers(userCount, page);
+        }
     }
 
     renderUsers = () => {
@@ -70,19 +63,44 @@ class UserList extends React.Component {
         })
     }
 
+    prevBtnHandler = () => {
+        if (this.state.page > 1) {
+            this.setState({
+                page: this.state.page - 1
+            })
+        }
+    }
+
+    nextBtnHandler = () => {
+        this.setState({
+            page: this.state.page + 1
+        })
+    }
+
     setUserCount = ({ target: { value } }) => {
         this.setState({
             userCount: value
         })
     }
 
-    loadUsers = () => {
-        getUsers(this.state.userCount).then((data) => {
-            const { results } = data;
-            this.setState({
-                users: results
+    loadUsers = (userCount, page) => {
+        getUsers(userCount, page)
+            .then((data) => {
+                const { results } = data;
+                this.setState({
+                    users: results
+                })
             })
-        });
+            .catch((error) => {
+                this.setState({
+                    error
+                })
+            })
+            .finally(() => {
+                this.setState({
+                    isLoading: false
+                })
+            });
     }
 
 
@@ -105,12 +123,14 @@ class UserList extends React.Component {
                 </label>
 
                 <section className="card-container">
-                    {isLoading && <HashLoader 
-                        size={500} 
-                        color="rgba(137, 30, 30, 1)" 
+                    {isLoading && <HashLoader
+                        size={500}
+                        color="rgba(137, 30, 30, 1)"
                         cssOverride={{ margin: "0 auto" }} />
                     }
                     {error && <h2 style={{ backgroundColor: 'red', color: 'white' }}>{error.message}</h2>}
+                    <button onClick={this.prevBtnHandler}>Previous page</button>
+                    <button onClick={this.nextBtnHandler}>Next page</button>
                     {users.length > 0 ? this.renderUsers() : null}
                 </section>
             </>
