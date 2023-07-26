@@ -1,49 +1,48 @@
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import UserList from "./UserList/UserList";
+import TodoList from "./TodoList/TodoList";
+import CounterPage from "./Counter/CounterPage";
+import AlohaDashboard from "./AlohaDashboard/AlohaDashboard";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 
 function App() {
     return (
         <>
-            <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
+            <BrowserRouter>
+                <nav>
+                    <ul>
+                        <li><Link to='users'>Go to users list</Link></li>
+                        <li><Link to='todo'>Go to todo list</Link></li>
+                        <li><Link to='counter'>Go to counter page</Link></li>
+                        <li><Link to='aloha'>Go to aloha</Link></li>
+                    </ul>
+                </nav>
 
-            {/* assign - просто завантажує нову сторінку */}
-            <button onClick={() => { window.location.assign('https://developer.mozilla.org') }}>Assign</button>
-            <button onClick={() => { window.location.reload() }}>Reload</button>
-            {/* replace - завантажує нову сторінку, при тому до попередньої ми вже повернутися не можемо */}
-            <button onClick={() => { window.location.replace('https://github.com/') }}>Replace</button>
-
-            <p>Lorem ipsum dolor sit amet</p>
-            <button
-                onClick={() => {
-                    window.navigator.clipboard.writeText('Lorem ipsum dolor sit amet');
-                    toast.success('Copied to clipboard');
-                }}
-            >Click to copy text</button>
-
-            <button onClick={() => {
-                const text = window.navigator.clipboard.readText();
-                console.log(text);
-            }}>Read text from clipboard</button>
-
-            <button onClick={() => {
-                window.navigator.geolocation.getCurrentPosition((positionObject) => {
-                    console.log(positionObject);
-                })
-                }}>Get my current position</button>
+                <Routes>
+                    <Route index element={<Home />}></Route>
+                    <Route path="/users" element={<UserList />} />
+                    <Route path="/todo" element={<TodoList />} />
+                    <Route path="/counter" element={<CounterPage />} />
+                    <Route path="/aloha" element={<AlohaDashboard />} />
+                    <Route path="/*" element={<NotFound />} />
+                </Routes>
+            </BrowserRouter>
         </>
     )
 }
 
 export default App;
+
+
+const Home = () => {
+    return <h1>Home page</h1>
+}
+
+const NotFound = () => {
+    return (
+        <>
+            <h1>404</h1>
+            <p>Page not found</p>
+        </>
+    )
+}
