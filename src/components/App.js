@@ -36,6 +36,12 @@ function App() {
                 const text = window.navigator.clipboard.readText();
                 console.log(text);
             }}>Read text from clipboard</button>
+
+            <button onClick={() => {
+                window.navigator.geolocation.getCurrentPosition((positionObject) => {
+                    console.log(positionObject);
+                })
+                }}>Get my current position</button>
         </>
     )
 }
