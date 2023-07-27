@@ -1,48 +1,41 @@
-import UserList from "./UserList/UserList";
-import TodoList from "./TodoList/TodoList";
-import CounterPage from "./Counter/CounterPage";
-import AlohaDashboard from "./AlohaDashboard/AlohaDashboard";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
+import DataProvider from "./DataProvider/DataProvider";
 
 function App() {
     return (
         <>
-            <BrowserRouter>
-                <nav>
-                    <ul>
-                        <li><Link to='users'>Go to users list</Link></li>
-                        <li><Link to='todo'>Go to todo list</Link></li>
-                        <li><Link to='counter'>Go to counter page</Link></li>
-                        <li><Link to='aloha'>Go to aloha</Link></li>
-                    </ul>
-                </nav>
+            <DataProvider>
+                {() => {
+                    return fetch('./phones.json')
+                        .then((response) => response.json());
+                }}
 
-                <Routes>
-                    <Route index element={<Home />}></Route>
-                    <Route path="/users" element={<UserList />} />
-                    <Route path="/todo" element={<TodoList />} />
-                    <Route path="/counter" element={<CounterPage />} />
-                    <Route path="/aloha" element={<AlohaDashboard />} />
-                    <Route path="/*" element={<NotFound />} />
-                </Routes>
-            </BrowserRouter>
+                {(state) => {
+                    const { data, isLoading, error } = state;
+                    return (
+                        <>
+                            {isLoading && <div>Loading....</div>}
+                            {error && <div>Error happening: {error.message}</div>}
+                            <ul>
+                                {data.map((data) =>
+                                    <li key={`${Date.now()} ${data.brand} ${data.model}`}>{data.brand} - {data.model}. Price: {data.price}</li>
+                                )}
+                            </ul>
+                        </>
+                    );
+                }}
+            </DataProvider>
+
         </>
     )
 }
 
 export default App;
 
+/*
 
-const Home = () => {
-    return <h1>Home page</h1>
-}
+ДЗ.
+Відобразіть поруч з компонентою телефонів компоненту телевізорів
+Зробіть так, щоб у компоненті телевізорів був нумерований список
+Використовуйте реалізований паттерн рендер-пропси (DataProvider)
 
-const NotFound = () => {
-    return (
-        <>
-            <h1>404</h1>
-            <p>Page not found</p>
-        </>
-    )
-}
+*/
