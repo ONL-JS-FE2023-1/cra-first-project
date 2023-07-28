@@ -1,11 +1,11 @@
 import React from 'react';
-import Subparent from './Subparent/Subparent';
+import SubparentWithTheme from './Subparent/Subparent';
 
 const Parent = (props) => {
     return (
         <div>
             Parent
-            <Subparent />
+            <SubparentWithTheme />
         </div>
     );
 }

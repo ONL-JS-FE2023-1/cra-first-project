@@ -1,26 +1,34 @@
 import React from 'react';
 import Child from './Child/Child';
-import { ThemeContext } from '../../../../contexts/themeContext';
+import { withTheme } from '../../../../HOC';
+import { UserContext } from '../../../../contexts/userContext';
 import CONSTANTS from '../../../../constants';
-const {THEMES} = CONSTANTS;
+const { THEMES } = CONSTANTS;
 
 const Subparent = (props) => {
+    const nextTheme = props.theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
+
     return (
-        <ThemeContext.Consumer>
-            {({theme, setTheme}) => {
+        <div style={{ border: '3px solid black', padding: '25px' }}>
+            Subparent
+            <p>{props.user.firstName} {props.user.lastName}</p>
+            <button onClick={() => { props.setTheme(nextTheme) }}>Click to change theme!</button>
+            <Child />
+        </div>
+    )
+}
 
-                const nextTheme = theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
-
+const SubparentWithTheme = (props) => {
+    return (
+    <UserContext.Consumer>
+            {({ user, logOut }) => {
+                const SubparentThemed = withTheme(Subparent)
                 return (
-                    <div>
-                        Subparent
-                        <button onClick={() => {setTheme(nextTheme)}}>Click to change theme!</button>
-                        <Child />
-                    </div>
+                    <SubparentThemed user={user} logOut={logOut} />
                 )
             }}
-        </ThemeContext.Consumer>
+        </UserContext.Consumer>
     );
 }
 
-export default Subparent;
+export default SubparentWithTheme;
