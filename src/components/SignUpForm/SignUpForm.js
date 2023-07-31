@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import styles from './SignUpFormStyle.module.css';
-import {SCHEMA} from '../../schemas/index'
+import {SCHEMA} from '../../schemas/index';
+import { Formik, Form, Field } from 'formik';
 
 const initialState = {
     email: '',
@@ -9,55 +9,28 @@ const initialState = {
     lastName: ''
 }
 
-class SignUpForm extends Component {
-    constructor(props) {
-        super(props);
-
-        // 1. Створюємо відповідне поле у стейті
-        this.state = {
-            ...initialState,
-            error: null
-        }
+function SignUpForm(props) {
+    const handleSubmitToFormik = (values,actions) => {
+        console.log(values);
+        actions.resetForm();
     }
 
-    // 3. реалізуємо обробник зміни інпутика
-    changeHandler = ({ target: { value, name } }) => {
-        this.setState({
-            [name]: value
-        })
-    }
-
-    submitHandler = (event) => {
-        event.preventDefault();
-        // isValidSync -> boolean
-        // validateSync -> object / error
-        try {
-            this.setState({
-                error: null
-            })
-
-            SCHEMA.validateSync(this.state);
-        } catch (error) {
-            this.setState({
-                error
-            })
-        }
-    }
-
-    render() {
-        const { email, password, firstName, lastName, error } = this.state;
+    
         return (
-            // 2. підставляємо у value інпутиків те, що знаходиться у стейті
-            <form onSubmit={this.submitHandler}>
-                <input type="text" name="firstName" placeholder='firstName' value={firstName} onChange={this.changeHandler} />
-                <input type="text" name="lastName" placeholder='lastName' value={lastName} onChange={this.changeHandler} />
-                <input type="text" name="email" placeholder='email' value={email} onChange={this.changeHandler} />
-                <input type="text" name="password" placeholder='password' value={password} onChange={this.changeHandler} />
-                <button type='submit'>Send form</button>
-                {error && <p className={styles.error}>{error.message}</p>}
-            </form>
+            <Formik initialValues={initialState} onSubmit={handleSubmitToFormik}>
+                {(formikProps) => {
+                    return (
+                        <Form>
+                            <Field placeholder='firstName' name='firstName'/>
+                            <Field placeholder='lastName' name='lastName'/>
+                            <Field placeholder='email' name='email'/>
+                            <Field type='password' placeholder='password' name='password'/>
+                            <button type='submit'>Send</button>
+                        </Form>
+                    );
+                }}
+            </Formik>
         );
-    }
 }
 
 export default SignUpForm;
