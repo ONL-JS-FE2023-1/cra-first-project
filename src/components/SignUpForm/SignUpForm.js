@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import * as yup from 'yup';
-
-const SCHEMA = yup.object({
-    firstName: yup.string().min(1).max(30),
-    lastName: yup.string().min(1).max(30),
-    email: yup.string().required().email(),
-    password: yup.string().required().matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)
-})
+import styles from './SignUpFormStyle.module.css';
+import {SCHEMA} from '../../schemas/index'
 
 const initialState = {
     email: '',
@@ -21,7 +15,8 @@ class SignUpForm extends Component {
 
         // 1. Створюємо відповідне поле у стейті
         this.state = {
-            ...initialState
+            ...initialState,
+            error: null
         }
     }
 
@@ -34,11 +29,23 @@ class SignUpForm extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(SCHEMA.isValidSync(this.state))
+        // isValidSync -> boolean
+        // validateSync -> object / error
+        try {
+            this.setState({
+                error: null
+            })
+
+            SCHEMA.validateSync(this.state);
+        } catch (error) {
+            this.setState({
+                error
+            })
+        }
     }
 
     render() {
-        const { email, password, firstName, lastName } = this.state;
+        const { email, password, firstName, lastName, error } = this.state;
         return (
             // 2. підставляємо у value інпутиків те, що знаходиться у стейті
             <form onSubmit={this.submitHandler}>
@@ -47,6 +54,7 @@ class SignUpForm extends Component {
                 <input type="text" name="email" placeholder='email' value={email} onChange={this.changeHandler} />
                 <input type="text" name="password" placeholder='password' value={password} onChange={this.changeHandler} />
                 <button type='submit'>Send form</button>
+                {error && <p className={styles.error}>{error.message}</p>}
             </form>
         );
     }
