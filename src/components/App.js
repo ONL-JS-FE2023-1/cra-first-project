@@ -1,10 +1,12 @@
 import React from "react";
-import MouseTracker from "./MouseTracker/MouseTracker";
+import NewUserList from "./UserList/NewUserList";
+import UserList from "./UserList/UserList";
+
 
 class App extends React.Component {
     render() {
         return (
-            <MouseTracker />
+            <NewUserList />
         )
     }
 }
