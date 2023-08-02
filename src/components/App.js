@@ -1,10 +1,10 @@
 import React from "react";
-import Clicker from "./SandboxComponent/Clicker";
+import PhonesLoader from "./PhonesLoader/PhonesLoader";
 
 
 function App() {
     return (
-        <Clicker />
+        <PhonesLoader />
     )
 
 }

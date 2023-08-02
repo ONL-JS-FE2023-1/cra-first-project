@@ -1,50 +1,30 @@
-import React, { Component } from 'react';
-
 /*
 
-+1. Компонента йде за даними
-+2. Компонента отримує дані і кладе їх в стейт
-+3. Компонента ділиться даними з кимось, хто знає як їх відображати
+1. Хук - js функція (не клас)
+2. Ім'я будь-якого хуку (в тому числі користувацького) починається з префіксу "use" (угода між розробника)
+3. У користувацькому хуку ми можемо використовувати інші хуки
 
 */
 
-class DataProvider extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            data: [],
-            isLoading: true,
-            error: null
-        }
-    }
+import { useState, useEffect } from "react";
 
-    componentDidMount() {
-        this.load();
-    }
+export function useData(loadData) {
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    load = () => {
-        this.props.children[0]() // MAXIMUM ATTENTION!!!
-        .then((data) => {
-            this.setState({
-                data
+    useEffect(() => {
+        loadData()
+            .then((data) => {
+                setData(data)
             })
-        })
-        .catch((error) => {
-            this.setState({
-                error
+            .catch((error) => {
+                setError(error)
             })
-        })
-        .finally(() => {
-            this.setState({
-                isLoading: false
+            .finally(() => {
+                setIsLoading(false)
             })
-        })
-    }
-    
-    render() {
-        return this.props.children[1](this.state); // MAXIMUM ATTENTION
-    }
+    }, [])
+
+    return {data, isLoading, error}
 }
-
-export default DataProvider;
