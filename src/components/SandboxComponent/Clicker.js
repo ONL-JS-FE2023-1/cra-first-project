@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
 
 const Clicker = () => {
     const [click, setClick] = useState(0);
@@ -16,19 +16,23 @@ const Clicker = () => {
         setValue(value)
     }
 
-    const logValue = useCallback(() => {
+    const logComputedValue = () => {
         let sum = 0;
         for(let i = 0; i < 900000000; i++) {
             sum += i;
         }
-        console.log(value);
-    }, [value])
+        const result = value ** 200;
+        return result;
+    }
+
+    const memoizedValue = useMemo(() => logComputedValue(), [value]);
+
+    console.log(memoizedValue);
 
     return (
         <div>
             <h1>{click}</h1>
-            <input type="text" value={value} onChange={changeHandler}></input>
-            <button onClick={logValue}>Click to log value!</button>
+            <input type="number" value={value} onChange={changeHandler}></input>
             <button onClick={handler}>Click me!</button>
         </div>
     );
