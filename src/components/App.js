@@ -1,10 +1,10 @@
 import React from "react";
-import CounterPage from "./Counter/CounterPage";
+import Clicker from "./SandboxComponent/Clicker";
 
 
 function App() {
     return (
-        <CounterPage />
+        <Clicker />
     )
 
 }
