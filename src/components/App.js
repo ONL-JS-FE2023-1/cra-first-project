@@ -1,10 +1,15 @@
 import React from "react";
-import PhonesLoader from "./PhonesLoader/PhonesLoader";
+import useMouseTracker from "../hooks/MouseTracker/MouseTracker";
 
 
 function App() {
+    const {coordinates} = useMouseTracker();
+
     return (
-        <PhonesLoader />
+        <section>
+            <p>X: {coordinates.x}</p>
+            <p>Y: {coordinates.y}</p>
+        </section>
     )
 
 }
