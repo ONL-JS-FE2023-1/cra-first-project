@@ -1,15 +1,12 @@
 import React from "react";
-import useMouseTracker from "../hooks/MouseTracker/MouseTracker";
+import RegistrationForm from "./RegistrationForm/RegistrationForm";
 
 
 function App() {
-    const {coordinates} = useMouseTracker();
+    
 
     return (
-        <section>
-            <p>X: {coordinates.x}</p>
-            <p>Y: {coordinates.y}</p>
-        </section>
+        <RegistrationForm />
     )
 
 }
